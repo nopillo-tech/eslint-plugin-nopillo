@@ -62,12 +62,12 @@ ruleTester.run(
       },
       {
         code: 'findOneBy({ someVariable: test() })',
-        output: 'findOneBy({ someVariable: Equal(test) })',
+        output: 'findOneBy({ someVariable: Equal(test()) })',
         errors: [{ messageId: 'useTypeORMComparisonHelper' }],
       },
       {
         code: 'findOneByOrFail({ someVariable: test })',
-        output: 'findOneByOrFail({ someVariable: Equal(test()) })',
+        output: 'findOneByOrFail({ someVariable: Equal(test) })',
         errors: [{ messageId: 'useTypeORMComparisonHelper' }],
       },
       {
