@@ -36,4 +36,47 @@ ruleTester.run(
   }
 );
 
+ruleTester.run(
+  "enforce-equal", // rule name
+  enforceEqualRule, // rule code
+  { // checks
+    // 'valid' checks cases that should pass
+    valid: [{
+      code: 'findOneBy({ id: Equal(someVariable) })',
+    },
+    {
+      code: "findOneBy({ someVariable: '123' })",
+    },
+    {
+      code: 'findOneByOrFail({ id: Equal(someVariable) })',
+    },
+    {
+      code: "findOneByOrFail({ someVariable: '123' })",
+    }],
+    // 'invalid' checks cases that should not pass
+    invalid: [
+      {
+        code: 'findOneBy({ someVariable: test })',
+        output: 'findOneBy({ someVariable: Equal(test) })',
+        errors: [{ messageId: 'useTypeORMComparisonHelper' }],
+      },
+      {
+        code: 'findOneBy({ someVariable: test() })',
+        output: 'findOneBy({ someVariable: Equal(test) })',
+        errors: [{ messageId: 'useTypeORMComparisonHelper' }],
+      },
+      {
+        code: 'findOneByOrFail({ someVariable: test })',
+        output: 'findOneByOrFail({ someVariable: Equal(test()) })',
+        errors: [{ messageId: 'useTypeORMComparisonHelper' }],
+      },
+      {
+        code: 'findOneByOrFail({ someVariable: test() })',
+        output: 'findOneByOrFail({ someVariable: Equal(test()) })',
+        errors: [{ messageId: 'useTypeORMComparisonHelper' }],
+      }
+    ],
+  }
+);
+
 console.log("All tests passed!");
