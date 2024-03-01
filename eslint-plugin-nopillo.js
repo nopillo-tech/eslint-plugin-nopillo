@@ -1,4 +1,4 @@
-// eslint-plugin-typeorm.js
+// eslint-plugin-nopillo.js
 
 const enforceEqualRule = require("./enforce-equal");
 const plugin = { rules: { "enforce-equal": enforceEqualRule } };
