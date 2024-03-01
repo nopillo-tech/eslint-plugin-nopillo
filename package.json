@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-nopillo",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "ESLint plugin for enforce-equal rule.",
   "main": "eslint-plugin-nopillo.js",
   "scripts": {

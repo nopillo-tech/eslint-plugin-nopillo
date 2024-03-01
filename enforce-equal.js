@@ -40,7 +40,7 @@ const rule = {
         }
       },
       CallExpression: node => {
-        if (node.callee.type === 'Identifier' && node.callee.name.startsWith('findOneBy')) {
+        if ((node.callee.type === 'Identifier' && node.callee.name.startsWith('findOneBy')) || (node.callee.type === 'MemberExpression' && node.callee.property.name.startsWith('findOneBy'))) {
           const args = node.arguments;
           // Step 2: Inspect the first argument to ensure it's an object literal
           if (args.length > 0 && args[0].type === 'ObjectExpression') {

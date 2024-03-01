@@ -48,6 +48,12 @@ ruleTester.run(
       code: "findOneBy({ someVariable: '123' })",
     },
     {
+      code: 'this.findOneBy({ id: Equal(someVariable) })',
+    },
+    {
+      code: "this.findOneBy({ someVariable: '123' })",
+    },
+    {
       code: 'findOneByOrFail({ id: Equal(someVariable) })',
     },
     {
@@ -61,8 +67,18 @@ ruleTester.run(
         errors: [{ messageId: 'useTypeORMComparisonHelper' }],
       },
       {
+        code: 'this.findOneBy({ someVariable: test })',
+        output: 'this.findOneBy({ someVariable: Equal(test) })',
+        errors: [{ messageId: 'useTypeORMComparisonHelper' }],
+      },
+      {
         code: 'findOneBy({ someVariable: test() })',
         output: 'findOneBy({ someVariable: Equal(test()) })',
+        errors: [{ messageId: 'useTypeORMComparisonHelper' }],
+      },
+      {
+        code: 'this.findOneBy({ someVariable: test() })',
+        output: 'this.findOneBy({ someVariable: Equal(test()) })',
         errors: [{ messageId: 'useTypeORMComparisonHelper' }],
       },
       {
