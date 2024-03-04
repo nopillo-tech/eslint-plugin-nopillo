@@ -48,6 +48,12 @@ ruleTester.run(
       code: "findOneBy({ someVariable: '123' })",
     },
     {
+      code: 'this.repo.findOneBy({ id: Equal(someVariable) })',
+    },
+    {
+      code: "this.repo.findOneBy({ someVariable: '123' })",
+    },
+    {
       code: 'findOneByOrFail({ id: Equal(someVariable) })',
     },
     {
@@ -61,8 +67,18 @@ ruleTester.run(
         errors: [{ messageId: 'useTypeORMComparisonHelper' }],
       },
       {
+        code: 'this.repo.findOneBy({ someVariable: test })',
+        output: 'this.repo.findOneBy({ someVariable: Equal(test) })',
+        errors: [{ messageId: 'useTypeORMComparisonHelper' }],
+      },
+      {
         code: 'findOneBy({ someVariable: test() })',
         output: 'findOneBy({ someVariable: Equal(test()) })',
+        errors: [{ messageId: 'useTypeORMComparisonHelper' }],
+      },
+      {
+        code: 'this.repo.findOneBy({ someVariable: test() })',
+        output: 'this.repo.findOneBy({ someVariable: Equal(test()) })',
         errors: [{ messageId: 'useTypeORMComparisonHelper' }],
       },
       {
