@@ -39,30 +39,6 @@ const rule = {
           });
         }
       },
-      CallExpression: node => {
-        if ((node.callee.type === 'Identifier' && node.callee.name.startsWith('findOneBy')) || (node.callee.type === 'MemberExpression' && node.callee.property.name.startsWith('findOneBy'))) {
-          const args = node.arguments;
-          // Step 2: Inspect the first argument to ensure it's an object literal
-          if (args.length > 0 && args[0].type === 'ObjectExpression') {
-            const properties = args[0].properties;
-            for (const property of properties) {
-              // Ensure property value is not wrapped in Equal()
-              // This is a simplification. You might need to handle more complex cases.
-              const key = property.key;
-              const value = property.value;
-              if ((value.type === 'CallExpression' && value.callee.name !== 'Equal') || (value.type === 'Identifier')) {
-                context.report({
-                  node: property.value,
-                  messageId: 'useTypeORMComparisonHelper',
-                  fix: key.type === 'Identifier'
-                    ? fixer => fixer.replaceText(property, `${key.name}: Equal(${value.type === 'Identifier' ? value.name : `${value.callee.name}()`})`)
-                    : undefined,
-                });
-              }
-            }
-          }
-        }
-      },
     };
   },
 };
